@@ -1,28 +1,29 @@
 import React, { Component, useState } from "react";
 import "../styles/App.css";
 
-class App extends Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      time: new Date().toLocaleString()
-    };
+    this.state = { date: new Date() };
   }
+
+  componentDidMount() {
+    this.timerID = setInterval(() => this.tick(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
   tick() {
     this.setState({
-      time: new Date().toLocaleString()
+      date: new Date()
     });
-  }
-  componentDidMount() {
-    this.id = setInterval(() => this.tick(), 1000);
-  }
-  componentWillUnmount() {
-    clearInterval(this.id);
   }
   render() {
     return (
       <div className="Clock">
-        <h3 id="time">{this.state.time}</h3>
+        <h3 id="time">{this.state.date.toLocaleTimeString()}</h3>
       </div>
     );
   }
